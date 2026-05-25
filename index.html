@@ -51,7 +51,7 @@ body{background:var(--cream);color:var(--ink);font-family:'Jost',sans-serif;font
 .btn:hover{background:var(--gold-pale);border-color:var(--gold-light)}
 .btn-gold{background:var(--gold);color:#fff;border-color:var(--gold)}
 .btn-gold:hover{background:#9e7d2a;border-color:#9e7d2a}
-.btn-sm{font-size:10px;padding:5px 12px}
+.btn-sm{font-size:10px;padding:5px 12px}.btn-delete{font-size:10px;padding:4px 10px;color:#8c4a2f;border-color:rgba(140,74,47,0.25);background:rgba(140,74,47,0.04)}.btn-delete:hover{background:rgba(140,74,47,0.1);border-color:rgba(140,74,47,0.4)}
 .btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:1rem}
 .overall-synthesis{background:var(--ink);color:var(--cream);border-radius:6px;padding:2.5rem 2.5rem 2rem;margin-bottom:3rem;display:none}
 .overall-synthesis.visible{display:block}
@@ -296,8 +296,22 @@ function buildEntryRow(ri,ei,entry,total){
   },'house'));
 
   inner.appendChild(pshRow);
+
+  if(ei>0){
+    var delBtn=document.createElement('button');
+    delBtn.className='btn btn-sm btn-delete';
+    delBtn.textContent='× remove this entry';
+    (function(r,e){delBtn.onclick=function(){removeEntry(r,e);};})(ri,ei);
+    inner.appendChild(delBtn);
+  }
+
   item.appendChild(inner);
   return item;
+}
+
+function removeEntry(ri,ei){
+  rulerData[ri].entries.splice(ei,1);
+  renderCards();
 }
 
 function buildSelect(label,options,selected,onchange,suffix){
