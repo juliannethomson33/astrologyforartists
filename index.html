@@ -388,15 +388,34 @@ function buildOverall(){
     return r.entries.map(function(e){return e.planet;}).join('–');
   });
   var text='You have '+rulerData.length+' core ruler'+(rulerData.length>1?'s':'')+': '+names.join(', ')+'.<br><br>';
+
   for(var i=0;i<rulerData.length;i++){
-    var e=rulerData[i].entries[0];
-    var pm=PLANET_MEANINGS[e.planet]||'shapes your creative world';
-    var sm=SIGN_MEANINGS[e.sign]||'with deep intention';
-    text+='<strong>'+names[i]+'</strong> — '+pm+', operating '+sm+'.<br>';
+    var ruler=rulerData[i];
+    var name=names[i];
+    if(ruler.entries.length===1){
+      var e=ruler.entries[0];
+      var pm=PLANET_MEANINGS[e.planet]||'shapes your creative world';
+      var sm=SIGN_MEANINGS[e.sign]||'with deep intention';
+      var hm=HOUSE_MEANINGS[e.house]||'in a significant area of life';
+      text+='<strong>'+name+'</strong> — '+pm+', operating '+sm+', and activating '+hm+'.<br><br>';
+    } else {
+      text+='<strong>'+name+'</strong> — this is a circular chain. Each planet in the loop rules the sign of the next, binding them into one living pattern:<br>';
+      for(var j=0;j<ruler.entries.length;j++){
+        var e=ruler.entries[j];
+        var pm=PLANET_MEANINGS[e.planet]||'shapes your creative world';
+        var sm=SIGN_MEANINGS[e.sign]||'with deep intention';
+        var hm=HOUSE_MEANINGS[e.house]||'in a significant area of life';
+        text+='<br><em>'+e.planet+' in '+e.sign+' in the '+e.house+' house</em> — '+pm+', operating '+sm+', activating '+hm+'.';
+      }
+      var chainFlow=ruler.entries.map(function(e){return e.planet+' ('+e.sign+')';}).join(' → ')+' → back to '+ruler.entries[0].planet;
+      text+='<br><br><em>The flow: '+chainFlow+'. When you work with any one of these planets, you move the whole chain.</em><br><br>';
+    }
   }
+
   if(rulerData.length>1){
-    var desc=rulerData.map(function(r){var e=r.entries[0];return 'the '+e.planet+' impulse ('+e.sign.toLowerCase()+')';}).join(', ');
-    text+='<br>Combined, your creative core is a process of synthesizing these modes: '+desc+'. These are not separate — they are threads of the same creative fabric. Entering at any point in this pattern moves the whole.';
+    var allPlanets=[];
+    rulerData.forEach(function(r){r.entries.forEach(function(e){allPlanets.push(e.planet+' ('+e.sign.toLowerCase()+')');});});
+    text+='<br>Taken together, your creative core weaves through all of these: '+allPlanets.join(', ')+'. These are not separate modes — they are one fabric. Entering at any point in this pattern moves the whole.';
   }
   return text;
 }
