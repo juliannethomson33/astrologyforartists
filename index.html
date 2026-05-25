@@ -72,6 +72,16 @@ body{background:var(--cream);color:var(--ink);font-family:'Jost',sans-serif;font
   .overall-synthesis .syn-text{color:#333}
   .synthesis-box{display:block!important}
 }
+
+.ref-block{margin-bottom:2.5rem}
+.ref-title{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:500;color:var(--ink);border-bottom:0.5px solid var(--border);padding-bottom:0.5rem;margin-bottom:1rem}
+.ref-grid{display:flex;flex-direction:column;gap:0.55rem}
+.ref-grid-3{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:0.55rem}
+.ref-item{display:grid;grid-template-columns:90px 16px 1fr;gap:4px;align-items:baseline;font-size:13.5px;line-height:1.5}
+.ref-planet{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:500;color:var(--ink)}
+.ref-dash{color:var(--gold);text-align:center}
+.ref-meaning{color:var(--ink-soft);font-weight:300}
+@media print{.ref-block{break-inside:avoid}}
 </style>
 </head>
 <body>
@@ -122,6 +132,89 @@ body{background:var(--cream);color:var(--ink);font-family:'Jost',sans-serif;font
     <textarea class="freewrite-area" placeholder="Sit with your rulership synthesis above, and write any new interpretations or alternative readings that feel true to you..."></textarea>
     <div class="freewrite-prompt">I know that by focusing on working at the base of the rulership scheme, I will change the output of the higher rulerships. What does that mean for me right now?</div>
     <textarea class="freewrite-area" placeholder="Your own words..."></textarea>
+  </div>
+
+
+  <!-- REFERENCE SECTION -->
+  <div class="section" id="referenceSection">
+    <div class="section-label">Reference — planets, signs &amp; houses</div>
+
+    <div class="ref-block">
+      <div class="ref-title">Planets &amp; Points</div>
+      <div class="ref-grid">
+        <div class="ref-item"><span class="ref-planet">Sun</span><span class="ref-dash">—</span><span class="ref-meaning">How you shine; you are always creating this way</span></div>
+        <div class="ref-item"><span class="ref-planet">Moon</span><span class="ref-dash">—</span><span class="ref-meaning">How you nurture yourself; how you create from a healthy place</span></div>
+        <div class="ref-item"><span class="ref-planet">Mercury</span><span class="ref-dash">—</span><span class="ref-meaning">How you rationalize (write about, communicate) your creative process</span></div>
+        <div class="ref-item"><span class="ref-planet">Venus</span><span class="ref-dash">—</span><span class="ref-meaning">How your work is accessible by others; how your work is made</span></div>
+        <div class="ref-item"><span class="ref-planet">Mars</span><span class="ref-dash">—</span><span class="ref-meaning">How you physically act to make your creative work</span></div>
+        <div class="ref-item"><span class="ref-planet">Jupiter</span><span class="ref-dash">—</span><span class="ref-meaning">How you understand your own creative work and sell your creative process</span></div>
+        <div class="ref-item"><span class="ref-planet">Saturn</span><span class="ref-dash">—</span><span class="ref-meaning">How you stabilize your physical creative environment</span></div>
+        <div class="ref-item"><span class="ref-planet">Uranus</span><span class="ref-dash">—</span><span class="ref-meaning">How you evolve creatively</span></div>
+        <div class="ref-item"><span class="ref-planet">Neptune</span><span class="ref-dash">—</span><span class="ref-meaning">How you're connected to unknowable truth; how you receive creative inspiration</span></div>
+        <div class="ref-item"><span class="ref-planet">Pluto</span><span class="ref-dash">—</span><span class="ref-meaning">How you fundamentally change throughout your creative process</span></div>
+        <div class="ref-item"><span class="ref-planet">South Node</span><span class="ref-dash">—</span><span class="ref-meaning">How you can already do it</span></div>
+        <div class="ref-item"><span class="ref-planet">North Node</span><span class="ref-dash">—</span><span class="ref-meaning">How you want to do it</span></div>
+        <div class="ref-item"><span class="ref-planet">AC</span><span class="ref-dash">—</span><span class="ref-meaning">How you show up in any creative space</span></div>
+        <div class="ref-item"><span class="ref-planet">IC</span><span class="ref-dash">—</span><span class="ref-meaning">How you're most connected to yourself in your process</span></div>
+        <div class="ref-item"><span class="ref-planet">DC</span><span class="ref-dash">—</span><span class="ref-meaning">How you see others and your creative environment</span></div>
+        <div class="ref-item"><span class="ref-planet">MC</span><span class="ref-dash">—</span><span class="ref-meaning">How you are seen by others in your creative world</span></div>
+      </div>
+    </div>
+
+    <div class="ref-block">
+      <div class="ref-title">Signs</div>
+      <div class="ref-grid">
+        <div class="ref-item"><span class="ref-planet">Aries</span><span class="ref-dash">—</span><span class="ref-meaning">Immediately through instinctive action… live action, cutting/fire, physical presence</span></div>
+        <div class="ref-item"><span class="ref-planet">Taurus</span><span class="ref-dash">—</span><span class="ref-meaning">Slowly through touch, taste, smell, hearing, sight… sensual, luxurious material focus, ripe</span></div>
+        <div class="ref-item"><span class="ref-planet">Gemini</span><span class="ref-dash">—</span><span class="ref-meaning">Easily through curiosity, conversation and data… writing, collage, printmaking, bookbinding, fonts, comics</span></div>
+        <div class="ref-item"><span class="ref-planet">Cancer</span><span class="ref-dash">—</span><span class="ref-meaning">Lovingly through emotion and nurturing… "body of work", feeling-focused, family-focused, home/ancestry-focused</span></div>
+        <div class="ref-item"><span class="ref-planet">Leo</span><span class="ref-dash">—</span><span class="ref-meaning">Warmly through creativity, joy and expression… colorful, charisma, pride of work</span></div>
+        <div class="ref-item"><span class="ref-planet">Virgo</span><span class="ref-dash">—</span><span class="ref-meaning">Meticulously through devotion and analysis… graphic design, calligraphy, realism</span></div>
+        <div class="ref-item"><span class="ref-planet">Libra</span><span class="ref-dash">—</span><span class="ref-meaning">Socially through relationships and diplomacy… classical beauty, compositional balance</span></div>
+        <div class="ref-item"><span class="ref-planet">Scorpio</span><span class="ref-dash">—</span><span class="ref-meaning">Strategically through darkness and power… occult/underworld/psychic themes, extreme sensitivity and attunement</span></div>
+        <div class="ref-item"><span class="ref-planet">Sagittarius</span><span class="ref-dash">—</span><span class="ref-meaning">Excitedly through freedom and understanding… large-scale, strong meaning behind the work, exploration of higher concepts through simple nature-based process, international interest</span></div>
+        <div class="ref-item"><span class="ref-planet">Capricorn</span><span class="ref-dash">—</span><span class="ref-meaning">Structurally through focus and sustainable processes… strong work ethic and heavy concepts/themes that pervade the societal times</span></div>
+        <div class="ref-item"><span class="ref-planet">Aquarius</span><span class="ref-dash">—</span><span class="ref-meaning">Intellectually through new ideas and niche interests… group interest, intellectual influence, writing, sci-fi, horizons, other worlds</span></div>
+        <div class="ref-item"><span class="ref-planet">Pisces</span><span class="ref-dash">—</span><span class="ref-meaning">Openly through imagination and flow… dream influence, mystical themes, infinity, water-based</span></div>
+      </div>
+    </div>
+
+    <div class="ref-block">
+      <div class="ref-title">Houses</div>
+      <div class="ref-grid">
+        <div class="ref-item"><span class="ref-planet">1st</span><span class="ref-dash">—</span><span class="ref-meaning">In your body / immediate environment</span></div>
+        <div class="ref-item"><span class="ref-planet">2nd</span><span class="ref-dash">—</span><span class="ref-meaning">In your bedroom / comfortable, sensual, leisurely environment</span></div>
+        <div class="ref-item"><span class="ref-planet">3rd</span><span class="ref-dash">—</span><span class="ref-meaning">In your neighborhood, at school, in transit</span></div>
+        <div class="ref-item"><span class="ref-planet">4th</span><span class="ref-dash">—</span><span class="ref-meaning">At home / in your kitchen / in your family's presence, basements</span></div>
+        <div class="ref-item"><span class="ref-planet">5th</span><span class="ref-dash">—</span><span class="ref-meaning">Outside in the sunlight, on a date, in a creative studio</span></div>
+        <div class="ref-item"><span class="ref-planet">6th</span><span class="ref-dash">—</span><span class="ref-meaning">In your bathroom, your work desk/office, your drawers/files, your pantry, your daily routine</span></div>
+        <div class="ref-item"><span class="ref-planet">7th</span><span class="ref-dash">—</span><span class="ref-meaning">Within 1-1 relationships, witnessing the outside world</span></div>
+        <div class="ref-item"><span class="ref-planet">8th</span><span class="ref-dash">—</span><span class="ref-meaning">In deep psychological perspective, in dark situations, financial investments, cemeteries, occult spaces</span></div>
+        <div class="ref-item"><span class="ref-planet">9th</span><span class="ref-dash">—</span><span class="ref-meaning">In religious or academic institutions, nature, in a foreign place</span></div>
+        <div class="ref-item"><span class="ref-planet">10th</span><span class="ref-dash">—</span><span class="ref-meaning">In corporate, governmental, or familial institutions/legacies, businesses</span></div>
+        <div class="ref-item"><span class="ref-planet">11th</span><span class="ref-dash">—</span><span class="ref-meaning">In social settings, online, on a beach, in another world</span></div>
+        <div class="ref-item"><span class="ref-planet">12th</span><span class="ref-dash">—</span><span class="ref-meaning">In dreams, in isolated spaces / hospitals / studios / laboratories / very far away unknown places</span></div>
+      </div>
+    </div>
+
+    <div class="ref-block">
+      <div class="ref-title">Sign Rulerships</div>
+      <div class="ref-grid ref-grid-3">
+        <div class="ref-item"><span class="ref-planet">Aries</span><span class="ref-dash">→</span><span class="ref-meaning">ruled by Mars</span></div>
+        <div class="ref-item"><span class="ref-planet">Taurus</span><span class="ref-dash">→</span><span class="ref-meaning">ruled by Venus</span></div>
+        <div class="ref-item"><span class="ref-planet">Gemini</span><span class="ref-dash">→</span><span class="ref-meaning">ruled by Mercury</span></div>
+        <div class="ref-item"><span class="ref-planet">Cancer</span><span class="ref-dash">→</span><span class="ref-meaning">ruled by the Moon</span></div>
+        <div class="ref-item"><span class="ref-planet">Leo</span><span class="ref-dash">→</span><span class="ref-meaning">ruled by the Sun</span></div>
+        <div class="ref-item"><span class="ref-planet">Virgo</span><span class="ref-dash">→</span><span class="ref-meaning">ruled by Mercury</span></div>
+        <div class="ref-item"><span class="ref-planet">Libra</span><span class="ref-dash">→</span><span class="ref-meaning">ruled by Venus</span></div>
+        <div class="ref-item"><span class="ref-planet">Scorpio</span><span class="ref-dash">→</span><span class="ref-meaning">ruled by Pluto</span></div>
+        <div class="ref-item"><span class="ref-planet">Sagittarius</span><span class="ref-dash">→</span><span class="ref-meaning">ruled by Jupiter</span></div>
+        <div class="ref-item"><span class="ref-planet">Capricorn</span><span class="ref-dash">→</span><span class="ref-meaning">ruled by Saturn</span></div>
+        <div class="ref-item"><span class="ref-planet">Aquarius</span><span class="ref-dash">→</span><span class="ref-meaning">ruled by Uranus</span></div>
+        <div class="ref-item"><span class="ref-planet">Pisces</span><span class="ref-dash">→</span><span class="ref-meaning">ruled by Neptune</span></div>
+      </div>
+    </div>
+
   </div>
 
   <div class="action-row" id="actionRow" style="display:none">
