@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Creative Core Rulerships — Astrology for Artists</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#f9f5ef;--warm-white:#fdfaf6;--ink:#1a1612;--ink-soft:#3d3530;
+  --ink-muted:#7a6e65;--gold:#b5933a;--gold-light:#e8d9b5;--gold-pale:#f5eed8;
+  --border:rgba(26,22,18,0.15);--border-soft:rgba(26,22,18,0.08);
+}
+body{background:var(--cream);color:var(--ink);font-family:'Jost',sans-serif;font-weight:300;line-height:1.7;min-height:100vh}
+.page{max-width:860px;margin:0 auto;padding:3rem 2rem 5rem}
+.header{text-align:center;padding-bottom:2.5rem;border-bottom:0.5px solid var(--border);margin-bottom:3rem}
+.header-eyebrow{font-family:'Jost',sans-serif;font-weight:400;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
+.header h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.2rem,5vw,3.4rem);line-height:1.1;color:var(--ink);margin-bottom:0.75rem}
+.header h1 em{font-style:italic;color:var(--ink-soft)}
+.header-sub{font-size:13px;color:var(--ink-muted);letter-spacing:0.04em}
+.section{margin-bottom:3rem}
+.section-label{font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:1.25rem;display:flex;align-items:center;gap:12px}
+.section-label::after{content:'';flex:1;height:0.5px;background:var(--border)}
+.count-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:2.5rem}
+.count-sentence{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:400;color:var(--ink)}
+.count-select{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:400;background:var(--warm-white);border:0.5px solid var(--border);border-radius:3px;padding:2px 8px 2px 6px;color:var(--gold);cursor:pointer;appearance:none;-webkit-appearance:none;min-width:48px;text-align:center}
+.count-select:focus{outline:1.5px solid var(--gold-light)}
+.ruler-card{background:var(--warm-white);border:0.5px solid var(--border);border-radius:6px;padding:1.75rem 2rem 1.5rem;margin-bottom:1.5rem}
+.ruler-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
+.ruler-card-number{font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--ink-muted)}
+.ruler-type-badge{font-size:11px;letter-spacing:0.1em;color:#5a7060;background:rgba(90,112,96,0.08);padding:3px 10px;border-radius:20px}
+.psh-row{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:8px;margin-bottom:1.25rem}
+@media(max-width:580px){.psh-row{grid-template-columns:1fr}.psh-sep{display:none}}
+.psh-sep{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--ink-muted);font-size:1.1rem;text-align:center}
+.psh-group{display:flex;flex-direction:column;gap:4px}
+.psh-label{font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold)}
+.psh-select{font-family:'Cormorant Garamond',serif;font-size:1.1rem;background:var(--cream);border:0.5px solid var(--border);border-radius:3px;padding:6px 10px;color:var(--ink);cursor:pointer;width:100%}
+.psh-select:focus{outline:1.5px solid var(--gold-light)}
+.chain-list{display:flex;flex-direction:column;gap:1rem;margin-bottom:1.25rem}
+.chain-item{display:flex;align-items:flex-start;gap:12px}
+.chain-connector{display:flex;flex-direction:column;align-items:center;padding-top:18px;flex-shrink:0;width:16px}
+.chain-dot{width:8px;height:8px;border-radius:50%;background:var(--gold-light);border:1px solid var(--gold);flex-shrink:0}
+.chain-line{width:1px;flex:1;background:var(--gold-light);min-height:30px;margin-top:4px}
+.chain-item-inner{flex:1;padding-bottom:0.5rem}
+.synthesis-box{background:var(--gold-pale);border:0.5px solid var(--gold-light);border-radius:4px;padding:1.25rem 1.5rem;margin-top:1.25rem;display:none}
+.synthesis-box.visible{display:block}
+.synthesis-label{font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem}
+.synthesis-text{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-style:italic;color:var(--ink-soft);line-height:1.7}
+.btn{font-family:'Jost',sans-serif;font-weight:400;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;padding:8px 18px;border-radius:3px;cursor:pointer;transition:background 0.15s,color 0.15s;border:0.5px solid var(--border);background:var(--warm-white);color:var(--ink-soft)}
+.btn:hover{background:var(--gold-pale);border-color:var(--gold-light)}
+.btn-gold{background:var(--gold);color:#fff;border-color:var(--gold)}
+.btn-gold:hover{background:#9e7d2a;border-color:#9e7d2a}
+.btn-sm{font-size:10px;padding:5px 12px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:1rem}
+.overall-synthesis{background:var(--ink);color:var(--cream);border-radius:6px;padding:2.5rem 2.5rem 2rem;margin-bottom:3rem;display:none}
+.overall-synthesis.visible{display:block}
+.overall-synthesis .syn-eyebrow{font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
+.overall-synthesis .syn-text{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-style:italic;line-height:1.8;color:#e8dfd4}
+.freewrite-section{margin-bottom:3rem}
+.freewrite-prompt{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;color:var(--ink-soft);margin-bottom:0.75rem;line-height:1.6}
+.freewrite-area{width:100%;min-height:130px;background:var(--warm-white);border:0.5px solid var(--border);border-radius:4px;padding:14px 16px;font-family:'Jost',sans-serif;font-weight:300;font-size:14px;color:var(--ink);resize:vertical;line-height:1.7;margin-bottom:1.5rem}
+.freewrite-area:focus{outline:1.5px solid var(--gold-light)}
+.freewrite-area::placeholder{color:var(--ink-muted);opacity:0.6}
+.action-row{display:flex;gap:12px;justify-content:center;margin-top:3rem;padding-top:2rem;border-top:0.5px solid var(--border)}
+@media print{
+  body{background:white;color:black}
+  .ruler-card{break-inside:avoid;border:1px solid #ccc}
+  .btn,.action-row{display:none!important}
+  .psh-select,.count-select,.freewrite-area{border:1px solid #ccc;background:white}
+  .overall-synthesis{background:#f0ebe3;color:black}
+  .overall-synthesis .syn-text{color:#333}
+  .synthesis-box{display:block!important}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="header-eyebrow">Astrology for Artists · Julianne Patricia Thomson</div>
+    <h1>My Creative<br><em>Core Rulerships</em></h1>
+    <div class="header-sub">A worksheet for tracing the living pattern of your birth chart</div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Step one</div>
+    <div class="count-row">
+      <span class="count-sentence">I have</span>
+      <select class="count-select" id="rulerCount">
+        <option value="">—</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+      <span class="count-sentence">core ruler(s) in my birth chart.</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Step two — enter your rulers</div>
+    <div id="rulerCardsContainer"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Overall synthesis</div>
+    <div class="overall-synthesis" id="overallSynthesis">
+      <div class="syn-eyebrow">Your creative core</div>
+      <div class="syn-text" id="overallSynthesisText"></div>
+    </div>
+  </div>
+
+  <div class="section freewrite-section" id="frewriteSection" style="display:none">
+    <div class="section-label">Step three — freewrite reflections</div>
+    <div class="freewrite-prompt">What do you always come back to? What is most reliable in your creative process?</div>
+    <textarea class="freewrite-area" placeholder="Write freely here — no editing, just noticing..."></textarea>
+    <div class="freewrite-prompt">Where in your process do you get stuck, or wish things flowed differently?</div>
+    <textarea class="freewrite-area" placeholder="What part of the creative cycle feels uncertain or challenging?"></textarea>
+    <div class="freewrite-prompt">How does your astrological pattern show up in what you just wrote? What surprised you?</div>
+    <textarea class="freewrite-area" placeholder="Sit with your rulership synthesis above, and write any new interpretations or alternative readings that feel true to you..."></textarea>
+    <div class="freewrite-prompt">I know that by focusing on working at the base of the rulership scheme, I will change the output of the higher rulerships. What does that mean for me right now?</div>
+    <textarea class="freewrite-area" placeholder="Your own words..."></textarea>
+  </div>
+
+  <div class="action-row" id="actionRow" style="display:none">
+    <button class="btn" onclick="window.print()">↓ save as PDF / print</button>
+    <button class="btn btn-gold" onclick="resetAll()">start over</button>
+  </div>
+
+</div>
+
+<script>
+var PLANETS=['Sun','Moon','Mercury','Venus','Mars','Jupiter','Saturn','Uranus','Neptune','Pluto','South Node','North Node','AC','IC','DC','MC'];
+var SIGNS=['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
+var HOUSES=['1st','2nd','3rd','4th','5th','6th','7th','8th','9th','10th','11th','12th'];
+
+var PLANET_MEANINGS={
+  'Sun':'you are always shining and creating — this is your essential, constant creative output',
+  'Moon':'you nurture yourself and create best from an emotionally grounded, nourished place',
+  'Mercury':'you rationalize, write about, and communicate your creative process — the way you think about your work shapes everything',
+  'Venus':'your work becomes accessible to others through beauty and material care — this is how it is made and received',
+  'Mars':'you physically act to bring your creative work into being — the body is central to your making',
+  'Jupiter':'you understand and expand your creative process through meaning, belief, and your ability to articulate it',
+  'Saturn':'you stabilize your physical creative environment through discipline and sustained, structural effort',
+  'Uranus':'you evolve and innovate creatively — disruption and originality are woven into your process',
+  'Neptune':'you receive creative inspiration through openness and connection to unknowable truth — receptivity is your gift',
+  'Pluto':'you fundamentally change throughout your creative process — transformation is how you make things',
+  'South Node':'you can already do this — it is an innate creative capacity you carry from the start',
+  'North Node':'you are moving toward this — it is the creative direction calling you forward',
+  'AC':'you show up in any creative space this way — it is your immediate creative presence',
+  'IC':'you are most connected to yourself in your process through this — it is your creative root',
+  'DC':'you see others and your creative environment through this lens — it shapes how you relate to your audience and collaborators',
+  'MC':'you are seen by others in your creative world through this — it is your public creative identity'
+};
+
+var SIGN_MEANINGS={
+  'Aries':'immediately, through instinctive action and live presence — moving first, cutting, firing',
+  'Taurus':'slowly, through touch, taste, smell and sensory richness — luxurious, material, ripe',
+  'Gemini':'easily, through curiosity, conversation, and data — writing, collage, gathering, connecting',
+  'Cancer':'lovingly, through emotion and nurturing — feeling-focused, anchored in family, home, and memory',
+  'Leo':'warmly, through creative joy and self-expression — colorful, charismatic, proud of what you make',
+  'Virgo':'meticulously, through devotion and careful analysis — craft as devotion, precision as care',
+  'Libra':'socially, through relationship and diplomacy — classical beauty, compositional balance, refinement',
+  'Scorpio':'strategically, through depth and power — psychological attunement, extreme sensitivity',
+  'Sagittarius':'excitedly, through freedom and higher understanding — large-scale, meaning-driven, exploratory',
+  'Capricorn':'structurally, through focus and sustainable process — strong work ethic, themes that endure',
+  'Aquarius':'intellectually, through new ideas and niche interest — collective vision, writing, futures, other worlds',
+  'Pisces':'openly, through imagination and flow — dream influence, mystical themes, infinity, water'
+};
+
+var HOUSE_MEANINGS={
+  '1st':'in your body and immediate environment',
+  '2nd':'in your bedroom, comfortable and sensual surroundings, leisurely spaces',
+  '3rd':'in your neighborhood, at school, in transit — conversation and local movement',
+  '4th':'at home, in your kitchen, in your family\'s presence, in basements and foundations',
+  '5th':'outside in the sunlight, on a date, in a creative studio — spaces of play and pleasure',
+  '6th':'in your daily routines, at your work desk, in your files — the everyday sacred',
+  '7th':'within one-on-one relationships, witnessing the outside world through others',
+  '8th':'in deep psychological perspective, dark or liminal spaces, financial depth',
+  '9th':'in nature, in academic or religious institutions, in foreign places — wherever you seek meaning',
+  '10th':'in institutional or public spaces — the professional and legacy-building world',
+  '11th':'in social settings, online, in collective spaces — communities and other worlds imagined',
+  '12th':'in dreams, in isolated spaces — hospitals, studios, laboratories, far-away or hidden places'
+};
+
+var rulerData=[];
+
+function initRulerCards(){
+  var count=parseInt(document.getElementById('rulerCount').value);
+  var container=document.getElementById('rulerCardsContainer');
+  if(!count){container.innerHTML='';return;}
+  rulerData=[];
+  for(var i=0;i<count;i++) rulerData.push({entries:[{planet:'',sign:'',house:''}],complete:false});
+  renderCards();
+}
+
+document.getElementById('rulerCount').addEventListener('change',initRulerCards);
+
+function renderCards(){
+  var container=document.getElementById('rulerCardsContainer');
+  container.innerHTML='';
+  for(var ri=0;ri<rulerData.length;ri++){
+    container.appendChild(buildCard(ri));
+  }
+  maybeShowOverall();
+}
+
+function buildCard(ri){
+  var ruler=rulerData[ri];
+  var isCircular=ruler.entries.length>1;
+  var card=document.createElement('div');
+  card.className='ruler-card';
+  card.id='ruler-'+ri;
+
+  var hdr=document.createElement('div');
+  hdr.className='ruler-card-header';
+  hdr.innerHTML='<div class="ruler-card-number">Ruler '+(ri+1)+' of '+rulerData.length+'</div>'
+    +'<div class="ruler-type-badge">'+(isCircular?'circular / mutual reception':'singular')+'</div>';
+  card.appendChild(hdr);
+
+  var chainList=document.createElement('div');
+  chainList.className='chain-list';
+  for(var ei=0;ei<ruler.entries.length;ei++){
+    chainList.appendChild(buildEntryRow(ri,ei,ruler.entries[ei],ruler.entries.length));
+  }
+  card.appendChild(chainList);
+
+  var synBox=document.createElement('div');
+  synBox.className='synthesis-box'+(ruler.complete?' visible':'');
+  synBox.id='synbox-'+ri;
+  synBox.innerHTML='<div class="synthesis-label">Interpretation</div>'
+    +'<div class="synthesis-text" id="syntext-'+ri+'">'+(ruler.complete?buildSynthesis(ruler.entries):'')+'</div>';
+  card.appendChild(synBox);
+
+  var btnRow=document.createElement('div');
+  btnRow.className='btn-row';
+  if(!ruler.complete){
+    var addBtn=document.createElement('button');
+    addBtn.className='btn btn-sm';
+    addBtn.textContent='+ add a linked ruler';
+    (function(r){addBtn.onclick=function(){addEntry(r);};})(ri);
+    btnRow.appendChild(addBtn);
+
+    var completeBtn=document.createElement('button');
+    completeBtn.className='btn btn-sm btn-gold';
+    completeBtn.textContent='complete this ruler';
+    (function(r){completeBtn.onclick=function(){completeRuler(r);};})(ri);
+    btnRow.appendChild(completeBtn);
+  } else {
+    var editBtn=document.createElement('button');
+    editBtn.className='btn btn-sm';
+    editBtn.textContent='edit';
+    (function(r){editBtn.onclick=function(){editRuler(r);};})(ri);
+    btnRow.appendChild(editBtn);
+  }
+  card.appendChild(btnRow);
+  return card;
+}
+
+function buildEntryRow(ri,ei,entry,total){
+  var item=document.createElement('div');
+  item.className='chain-item';
+
+  var conn=document.createElement('div');
+  conn.className='chain-connector';
+  var dot=document.createElement('div');
+  dot.className='chain-dot';
+  conn.appendChild(dot);
+  if(ei<total-1){
+    var line=document.createElement('div');
+    line.className='chain-line';
+    conn.appendChild(line);
+  }
+  item.appendChild(conn);
+
+  var inner=document.createElement('div');
+  inner.className='chain-item-inner';
+
+  var pshRow=document.createElement('div');
+  pshRow.className='psh-row';
+
+  pshRow.appendChild(buildSelect('Planet / Point',PLANETS,entry.planet,function(v){
+    rulerData[ri].entries[ei].planet=v; renderCards();
+  }));
+  var sep1=document.createElement('div');sep1.className='psh-sep';sep1.textContent='in';
+  pshRow.appendChild(sep1);
+  pshRow.appendChild(buildSelect('Sign',SIGNS,entry.sign,function(v){
+    rulerData[ri].entries[ei].sign=v; renderCards();
+  }));
+  var sep2=document.createElement('div');sep2.className='psh-sep';sep2.textContent='·';
+  pshRow.appendChild(sep2);
+  pshRow.appendChild(buildSelect('House',HOUSES,entry.house,function(v){
+    rulerData[ri].entries[ei].house=v; renderCards();
+  },'house'));
+
+  inner.appendChild(pshRow);
+  item.appendChild(inner);
+  return item;
+}
+
+function buildSelect(label,options,selected,onchange,suffix){
+  var g=document.createElement('div');
+  g.className='psh-group';
+  var lbl=document.createElement('div');
+  lbl.className='psh-label';
+  lbl.textContent=label;
+  g.appendChild(lbl);
+  var sel=document.createElement('select');
+  sel.className='psh-select';
+  var blank=document.createElement('option');
+  blank.value='';blank.textContent=label;
+  sel.appendChild(blank);
+  for(var i=0;i<options.length;i++){
+    var opt=document.createElement('option');
+    opt.value=options[i];
+    opt.textContent=suffix?options[i]+' '+suffix:options[i];
+    if(options[i]===selected) opt.selected=true;
+    sel.appendChild(opt);
+  }
+  sel.addEventListener('change',(function(fn){return function(){fn(this.value);};})(onchange));
+  g.appendChild(sel);
+  return g;
+}
+
+function addEntry(ri){
+  rulerData[ri].entries.push({planet:'',sign:'',house:''});
+  renderCards();
+}
+
+function completeRuler(ri){
+  var entries=rulerData[ri].entries;
+  for(var i=0;i<entries.length;i++){
+    if(!entries[i].planet||!entries[i].sign||!entries[i].house){
+      alert('Please fill in all planet, sign, and house fields before completing.');return;
+    }
+  }
+  rulerData[ri].complete=true;
+  renderCards();
+}
+
+function editRuler(ri){
+  rulerData[ri].complete=false;
+  renderCards();
+}
+
+function buildSynthesis(entries){
+  if(!entries.length||!entries[0].planet) return '';
+  var lines=[];
+  for(var i=0;i<entries.length;i++){
+    var e=entries[i];
+    var pm=PLANET_MEANINGS[e.planet]||'shapes your creative expression';
+    var sm=SIGN_MEANINGS[e.sign]||'with deep intention';
+    var hm=HOUSE_MEANINGS[e.house]||'in a significant area of life';
+    lines.push('<strong>'+e.planet+' in '+e.sign+' in the '+e.house+' house:</strong> Your '+e.planet+' means '+pm+'. This happens '+sm+', and it activates '+hm+'.');
+  }
+  if(entries.length===1) return lines[0];
+  var chainDesc=entries.map(function(e){return e.planet+' (in '+e.sign+')';}).join(' → ')+' → back to '+entries[0].planet;
+  return 'This is a circular rulership — a living chain where each planet feeds into the next, and back again.<br><br>'
+    +lines.join('<br><br>')
+    +'<br><br><em>The pattern flows: '+chainDesc+'. These dimensions of your creative life are inseparably woven — when you work with one, you move all of them.</em>';
+}
+
+function maybeShowOverall(){
+  var count=parseInt(document.getElementById('rulerCount').value)||0;
+  if(!count) return;
+  var allDone=rulerData.length===count;
+  for(var i=0;i<rulerData.length;i++) if(!rulerData[i].complete) allDone=false;
+  var el=document.getElementById('overallSynthesis');
+  var freeEl=document.getElementById('frewriteSection');
+  var actionEl=document.getElementById('actionRow');
+  if(allDone){
+    el.classList.add('visible');
+    freeEl.style.display='block';
+    actionEl.style.display='flex';
+    document.getElementById('overallSynthesisText').innerHTML=buildOverall();
+  } else {
+    el.classList.remove('visible');
+    freeEl.style.display='none';
+    actionEl.style.display='none';
+  }
+}
+
+function buildOverall(){
+  var names=rulerData.map(function(r){
+    if(r.entries.length===1) return r.entries[0].planet;
+    return r.entries.map(function(e){return e.planet;}).join('–');
+  });
+  var text='You have '+rulerData.length+' core ruler'+(rulerData.length>1?'s':'')+': '+names.join(', ')+'.<br><br>';
+  for(var i=0;i<rulerData.length;i++){
+    var e=rulerData[i].entries[0];
+    var pm=PLANET_MEANINGS[e.planet]||'shapes your creative world';
+    var sm=SIGN_MEANINGS[e.sign]||'with deep intention';
+    text+='<strong>'+names[i]+'</strong> — '+pm+', operating '+sm+'.<br>';
+  }
+  if(rulerData.length>1){
+    var desc=rulerData.map(function(r){var e=r.entries[0];return 'the '+e.planet+' impulse ('+e.sign.toLowerCase()+')';}).join(', ');
+    text+='<br>Combined, your creative core is a process of synthesizing these modes: '+desc+'. These are not separate — they are threads of the same creative fabric. Entering at any point in this pattern moves the whole.';
+  }
+  return text;
+}
+
+function resetAll(){
+  if(!confirm('Are you sure you want to start over?')) return;
+  document.getElementById('rulerCount').value='';
+  rulerData=[];
+  document.getElementById('rulerCardsContainer').innerHTML='';
+  document.getElementById('overallSynthesis').classList.remove('visible');
+  document.getElementById('frewriteSection').style.display='none';
+  document.getElementById('actionRow').style.display='none';
+  document.querySelectorAll('.freewrite-area').forEach(function(a){a.value='';});
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
