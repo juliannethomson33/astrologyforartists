@@ -1,3 +1,4 @@
+<!-- © 2025 Julianne Patricia Thomson. All rights reserved. This worksheet and all interpretive content, frameworks, and text within it are the intellectual property of Julianne Patricia Thomson and may not be reproduced, redistributed, or reused without explicit written permission. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,6 +35,14 @@ body{background:var(--cream);color:var(--ink);font-family:'Jost',sans-serif;font
 .top-freewrite-area:focus{outline:1.5px solid var(--gold-light)}
 .top-freewrite-area::placeholder{color:var(--ink-muted);opacity:0.5}
 .save-indicator{font-size:11px;color:var(--ink-muted);margin-top:6px;min-height:18px;transition:opacity 0.3s}
+.freewrite-details{margin-bottom:1rem;border:0.5px solid var(--border);border-radius:4px;background:var(--warm-white)}
+.freewrite-details summary{font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);padding:10px 14px;cursor:pointer;user-select:none;list-style:none}
+.freewrite-details summary::-webkit-details-marker{display:none}
+.freewrite-details summary::before{content:'+ ';font-size:13px}
+.freewrite-details[open] summary::before{content:'− '}
+.freewrite-details[open] summary{border-bottom:0.5px solid var(--border)}
+.freewrite-questions{padding:12px 18px 14px 32px;display:flex;flex-direction:column;gap:6px}
+.freewrite-questions li{font-size:13px;color:var(--ink-soft);line-height:1.6}
 
 /* COUNT */
 .count-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:2.5rem}
@@ -139,9 +148,22 @@ body{background:var(--cream);color:var(--ink);font-family:'Jost',sans-serif;font
   <!-- TOP FREEWRITE -->
   <div class="section">
     <div class="section-label">Opening freewrite</div>
-    <div class="top-freewrite-prompt">Before you begin mapping your chart, write freely for a few minutes. What do you always come back to in your creative process? What is always reliable — and what has not been?</div>
+    <div class="top-freewrite-prompt">To begin, please describe your creative process from start to finish.</div>
+    <details class="freewrite-details">
+      <summary>more questions to consider for this free write</summary>
+      <ul class="freewrite-questions">
+        <li>What do you do to begin working?</li>
+        <li>What happens while you're working?</li>
+        <li>How do you complete working?</li>
+        <li>Is your process flowing with other areas of your life — eating, other jobs, family — or is it distinct?</li>
+        <li>What tools do you use in your process, physically?</li>
+        <li>Where are you, where do you go physically to do your creative work?</li>
+        <li>Where do you go emotionally to do your creative work?</li>
+        <li>Be as detailed as possible from your own memory recall. It doesn't have to be definitive — you can always come back and rewrite later.</li>
+      </ul>
+    </details>
     <div class="top-freewrite-note">Your writing saves automatically as you type and will still be here if you close and return to this page.</div>
-    <textarea class="top-freewrite-area" id="topFreewrite" placeholder="Write freely here — no editing, just noticing. What draws you back? What feels certain? What is still searching for its form..."></textarea>
+    <textarea class="top-freewrite-area" id="topFreewrite" placeholder="Write freely here..."></textarea>
     <div class="save-indicator" id="topSaveIndicator"></div>
   </div>
 
@@ -353,6 +375,16 @@ body{background:var(--cream);color:var(--ink);font-family:'Jost',sans-serif;font
   <div class="action-row" id="actionRow" style="display:flex">
     <button class="btn" onclick="window.print()">↓ save as PDF / print</button>
     <button class="btn btn-gold" onclick="resetAll()">start over</button>
+  </div>
+
+  <!-- FOOTER -->
+  <div style="margin-top:4rem;padding-top:2rem;border-top:0.5px solid rgba(26,22,18,0.15);text-align:center;">
+    <p style="font-family:'Jost',sans-serif;font-size:11px;letter-spacing:0.15em;color:#7a6e65;line-height:1.8;">
+      © 2025 Julianne Patricia Thomson · All rights reserved<br>
+      <span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;letter-spacing:0.05em;">Astrology for Artists</span><br>
+      This material may not be reproduced or redistributed without written permission.<br>
+      <a href="https://juliannepatriciathomson.cargo.site" style="color:#b5933a;text-decoration:none;letter-spacing:0.1em;">juliannepatriciathomson.cargo.site</a>
+    </p>
   </div>
 
 </div><!-- end page -->
