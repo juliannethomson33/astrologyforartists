@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rulership Map — Astrology for Artists</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#faf6ef;--ink:#18120e;--ink-soft:#3d3028;--ink-muted:#8a7a6e;
+  --gold:#b5903a;--gold-light:#e2c97a;
+  --black:#111;--orange:#f0a030;--blue:#2a8fd4;--pink:#d93a8a;--red:#d42a1a;--purple:#7a3ab5;
+  --border:rgba(24,18,14,0.13);
+}
+body{background:var(--cream);color:var(--ink);font-family:'Jost',sans-serif;font-weight:300;min-height:100vh}
+
+/* HEADER */
+.header{text-align:center;padding:2.5rem 2rem 1.5rem;border-bottom:0.5px solid var(--border)}
+.eyebrow{font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:0.6rem}
+.header h1{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:300;font-style:italic;color:var(--ink);line-height:1.1}
+
+/* MAIN LAYOUT */
+.main{display:grid;grid-template-columns:320px 1fr;min-height:calc(100vh - 120px)}
+@media(max-width:800px){.main{grid-template-columns:1fr;grid-template-rows:auto 1fr}}
+
+/* INPUT PANEL */
+.input-panel{border-right:0.5px solid var(--border);padding:2rem 1.5rem;overflow-y:auto;background:#fdf9f3}
+.panel-title{font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem}
+.planet-row{margin-bottom:1rem}
+.planet-row label{display:block;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:4px}
+.planet-row .selects{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+select{font-family:'Jost',sans-serif;font-size:12px;font-weight:300;background:#faf6ef;border:0.5px solid var(--border);border-radius:3px;padding:6px 8px;color:var(--ink);cursor:pointer;width:100%;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238a7a6e'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center}
+select:focus{outline:1px solid var(--gold-light)}
+.calculate-btn{width:100%;margin-top:1.5rem;padding:12px;font-family:'Jost',sans-serif;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;background:var(--ink);color:var(--cream);border:none;border-radius:3px;cursor:pointer;transition:background 0.15s}
+.calculate-btn:hover{background:var(--ink-soft)}
+.reset-btn{width:100%;margin-top:8px;padding:10px;font-family:'Jost',sans-serif;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;background:transparent;color:var(--ink-muted);border:0.5px solid var(--border);border-radius:3px;cursor:pointer}
+.reset-btn:hover{background:rgba(0,0,0,0.04)}
+
+/* MAP PANEL */
+.map-panel{position:relative;overflow:hidden;display:flex;flex-direction:column}
+.map-canvas-wrap{flex:1;position:relative;min-height:500px}
+canvas{position:absolute;top:0;left:0;width:100%;height:100%}
+.empty-state{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;opacity:0.5}
+.empty-state p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.2rem;color:var(--ink-muted)}
+
+/* INTERPRETATION */
+.interpretation{border-top:0.5px solid var(--border);padding:1.5rem 2rem;max-height:220px;overflow-y:auto;display:none}
+.interpretation.visible{display:block}
+.interp-eyebrow{font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
+.interp-body{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-style:italic;color:var(--ink-soft);line-height:1.8}
+.interp-body p{margin-bottom:0.75rem}
+.chain-block{margin-bottom:1rem}
+.chain-block .chain-title{font-family:'Jost',sans-serif;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:0.3rem}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="eyebrow">Astrology for Artists · Julianne Patricia Thomson</div>
+  <h1>Rulership Map</h1>
+</div>
+
+<div class="main">
+
+  <!-- INPUT PANEL -->
+  <div class="input-panel">
+    <div class="panel-title">Enter your placements</div>
+    <div id="planetInputs"></div>
+    <button class="calculate-btn" onclick="calculate()">Generate map</button>
+    <button class="reset-btn" onclick="resetAll()">Clear</button>
+  </div>
+
+  <!-- MAP PANEL -->
+  <div class="map-panel">
+    <div class="map-canvas-wrap">
+      <canvas id="mapCanvas"></canvas>
+      <div class="empty-state" id="emptyState">
+        <p>Enter your placements and generate your map</p>
+      </div>
+    </div>
+    <div class="interpretation" id="interpretation">
+      <div class="interp-eyebrow">Your rulership interpretation</div>
+      <div class="interp-body" id="interpBody"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const PLANETS = ['Sun','Moon','Mercury','Venus','Mars','Jupiter','Saturn','Uranus','Neptune','Pluto','North Node','South Node','AC','MC'];
+const SIGNS   = ['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
+const HOUSES  = ['1st','2nd','3rd','4th','5th','6th','7th','8th','9th','10th','11th','12th'];
+
+const RULERS = {
+  Aries:'Mars',Taurus:'Venus',Gemini:'Mercury',Cancer:'Moon',Leo:'Sun',
+  Virgo:'Mercury',Libra:'Venus',Scorpio:'Pluto',Sagittarius:'Jupiter',
+  Capricorn:'Saturn',Aquarius:'Uranus',Pisces:'Neptune'
+};
+
+const PLANET_MEANINGS = {
+  Sun:'you are always shining and creating — your essential, constant creative output',
+  Moon:'you nurture yourself and create best from an emotionally grounded, nourished place',
+  Mercury:'you rationalize, write about, and communicate your creative process',
+  Venus:'your work becomes accessible to others through beauty and material care',
+  Mars:'you physically act to bring your creative work into being — the body is central',
+  Jupiter:'you understand and expand your creative process through meaning and belief',
+  Saturn:'you stabilize your creative environment through discipline and structure',
+  Uranus:'you evolve and innovate — disruption and originality are woven into your process',
+  Neptune:'you receive creative inspiration through openness to unknowable truth',
+  Pluto:'you fundamentally transform throughout your creative process',
+  'North Node':'you are moving toward this creative direction',
+  'South Node':'you can already do this — an innate creative capacity',
+  AC:'you show up in any creative space this way',
+  MC:'you are seen by others in your creative world through this'
+};
+
+const SIGN_MEANINGS = {
+  Aries:'immediately, through instinctive action and live presence',
+  Taurus:'slowly, through touch, taste, smell and sensory richness',
+  Gemini:'easily, through curiosity, conversation and data',
+  Cancer:'lovingly, through emotion and nurturing',
+  Leo:'warmly, through creative joy and self-expression',
+  Virgo:'meticulously, through devotion and careful analysis',
+  Libra:'socially, through relationship and beauty',
+  Scorpio:'strategically, through depth, darkness and transformation',
+  Sagittarius:'excitedly, through freedom and higher understanding',
+  Capricorn:'structurally, through focus and sustainable process',
+  Aquarius:'intellectually, through new ideas and niche interest',
+  Pisces:'openly, through imagination and flow'
+};
+
+const HOUSE_MEANINGS = {
+  '1st':'in your body and immediate environment',
+  '2nd':'in your bedroom and sensory surroundings',
+  '3rd':'in your neighborhood, at school, in transit',
+  '4th':'at home, in your family\'s presence, in basements',
+  '5th':'outside in the sunlight, in a creative studio',
+  '6th':'in your daily routines, at your work desk',
+  '7th':'within one-on-one relationships',
+  '8th':'in deep psychological or liminal spaces',
+  '9th':'in nature, in foreign places, seeking meaning',
+  '10th':'in institutional or public legacy spaces',
+  '11th':'in social settings, online, in collective spaces',
+  '12th':'in dreams, isolated studios, far-away places'
+};
+
+// Circle colors by sign group (matching reference image aesthetic)
+function colorForSign(sign) {
+  const groups = {
+    // Scorpio → dark
+    Scorpio:'#111111',
+    // Capricorn/Saturn → blue
+    Capricorn:'#2a8fd4',
+    // Sagittarius → blue
+    Sagittarius:'#2a8fd4',
+    // Pisces → pink
+    Pisces:'#d93a8a',
+    // Libra/Taurus/Gemini → orange
+    Libra:'#f0a030', Taurus:'#f0a030', Gemini:'#f0a030',
+    // Aries/Capricorn Mars → red
+    Aries:'#d42a1a',
+    // Cancer → pink
+    Cancer:'#d93a8a',
+    // Leo → orange
+    Leo:'#f0a030',
+    // Virgo → blue
+    Virgo:'#2a8fd4',
+    // Aquarius → blue
+    Aquarius:'#2a8fd4',
+  };
+  return groups[sign] || '#888';
+}
+
+// Build planet inputs
+function buildInputs() {
+  const container = document.getElementById('planetInputs');
+  container.innerHTML = '';
+  PLANETS.forEach(planet => {
+    const row = document.createElement('div');
+    row.className = 'planet-row';
+    row.innerHTML = `<label>${planet}</label>
+      <div class="selects">
+        <select id="sign_${planet}">
+          <option value="">Sign</option>
+          ${SIGNS.map(s=>`<option value="${s}">${s}</option>`).join('')}
+        </select>
+        <select id="house_${planet}">
+          <option value="">House</option>
+          ${HOUSES.map(h=>`<option value="${h}">${h}</option>`).join('')}
+        </select>
+      </div>`;
+    container.appendChild(row);
+  });
+}
+
+// Get placements
+function getPlacements() {
+  const result = {};
+  PLANETS.forEach(p => {
+    const sign = document.getElementById('sign_'+p).value;
+    const house = document.getElementById('house_'+p).value;
+    if (sign) result[p] = {sign, house};
+  });
+  return result;
+}
+
+// Build rulership chains
+function buildChains(placements) {
+  const chains = [];
+  const visited = new Set();
+
+  Object.keys(placements).forEach(startPlanet => {
+    if (visited.has(startPlanet)) return;
+    const chain = [];
+    let current = startPlanet;
+    const seen = new Set();
+
+    while (current && placements[current] && !seen.has(current)) {
+      seen.add(current);
+      chain.push(current);
+      const sign = placements[current].sign;
+      const ruler = RULERS[sign];
+      if (!ruler || !placements[ruler] || ruler === current) break;
+      current = ruler;
+    }
+    // mark last as terminal
+    chain.forEach(p => visited.add(p));
+    if (chain.length > 0) chains.push(chain);
+  });
+
+  // Find core rulers — planets whose chain loops back to themselves or terminates in themselves
+  return chains;
+}
+
+// Layout nodes organically like reference image
+function layoutNodes(placements, chains) {
+  const canvas = document.getElementById('mapCanvas');
+  const W = canvas.width, H = canvas.height;
+  const nodes = {};
+  const allPlanets = Object.keys(placements);
+
+  // Build a dependency map: who rules who
+  const ruledBy = {}; // planet → its ruler
+  allPlanets.forEach(p => {
+    const sign = placements[p].sign;
+    const ruler = RULERS[sign];
+    if (ruler && placements[ruler] && ruler !== p) {
+      ruledBy[p] = ruler;
+    }
+  });
+
+  // Find roots (planets not ruled by any other planet in the chart,
+  // or whose ruler is themselves)
+  const roots = allPlanets.filter(p => !ruledBy[p] || ruledBy[p] === p);
+
+  // Build tree levels via BFS from roots
+  const levels = {};
+  const queue = [...roots];
+  roots.forEach(r => levels[r] = 0);
+
+  // Also find who each planet rules (reverse map)
+  const rules = {}; // planet → [planets it rules]
+  Object.keys(ruledBy).forEach(p => {
+    const r = ruledBy[p];
+    if (!rules[r]) rules[r] = [];
+    rules[r].push(p);
+  });
+
+  while (queue.length) {
+    const p = queue.shift();
+    (rules[p] || []).forEach(child => {
+      if (levels[child] === undefined) {
+        levels[child] = levels[p] + 1;
+        queue.push(child);
+      }
+    });
+  }
+
+  // Group by level
+  const byLevel = {};
+  allPlanets.forEach(p => {
+    const lv = levels[p] !== undefined ? levels[p] : 0;
+    if (!byLevel[lv]) byLevel[lv] = [];
+    byLevel[lv].push(p);
+  });
+
+  const maxLevel = Math.max(...Object.keys(byLevel).map(Number));
+  const R = 42; // circle radius
+  const margin = 80;
+  const usableH = H - margin * 2;
+  const usableW = W - margin * 2;
+
+  // Place levels top-to-bottom: level 0 = leaves (top), maxLevel = roots (bottom)
+  // Invert: roots at bottom, leaves at top
+  Object.keys(byLevel).forEach(lv => {
+    const lvNum = parseInt(lv);
+    const items = byLevel[lv];
+    const y = margin + ((maxLevel - lvNum) / Math.max(maxLevel, 1)) * usableH;
+    items.forEach((p, i) => {
+      const x = margin + (i + 0.5) / items.length * usableW;
+      nodes[p] = {x, y, r: R, planet: p, sign: placements[p].sign, house: placements[p].house};
+    });
+  });
+
+  return {nodes, ruledBy};
+}
+
+// Draw the map
+function drawMap(placements) {
+  const canvas = document.getElementById('mapCanvas');
+  const wrap = canvas.parentElement;
+  canvas.width = wrap.clientWidth * window.devicePixelRatio;
+  canvas.height = wrap.clientHeight * window.devicePixelRatio;
+  canvas.style.width = wrap.clientWidth + 'px';
+  canvas.style.height = wrap.clientHeight + 'px';
+  const ctx = canvas.getContext('2d');
+  ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+  const W = wrap.clientWidth, H = wrap.clientHeight;
+  ctx.clearRect(0, 0, W, H);
+
+  if (!Object.keys(placements).length) return;
+
+  const {nodes, ruledBy} = layoutNodes(placements, null);
+  const R = 42;
+
+  // Draw arrows first
+  Object.keys(ruledBy).forEach(child => {
+    const ruler = ruledBy[child];
+    if (!nodes[child] || !nodes[ruler]) return;
+    const nx = nodes[child], nr = nodes[ruler];
+    const dx = nr.x - nx.x, dy = nr.y - nx.y;
+    const dist = Math.sqrt(dx*dx+dy*dy);
+    if (dist === 0) return;
+    const ux = dx/dist, uy = dy/dist;
+    const sx = nx.x + ux*(R+2), sy = nx.y + uy*(R+2);
+    const ex = nr.x - ux*(R+2), ey = nr.y - uy*(R+2);
+    ctx.beginPath();
+    ctx.moveTo(sx, sy);
+    ctx.lineTo(ex, ey);
+    ctx.strokeStyle = '#888';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    // arrowhead
+    const size = 8;
+    ctx.beginPath();
+    ctx.moveTo(ex, ey);
+    ctx.lineTo(ex - ux*size - uy*size*0.4, ey - uy*size + ux*size*0.4);
+    ctx.lineTo(ex - ux*size + uy*size*0.4, ey - uy*size - ux*size*0.4);
+    ctx.closePath();
+    ctx.fillStyle = '#888';
+    ctx.fill();
+  });
+
+  // Draw circles
+  Object.values(nodes).forEach(n => {
+    const color = colorForSign(n.sign);
+    // shadow
+    ctx.shadowColor = 'rgba(0,0,0,0.12)';
+    ctx.shadowBlur = 10;
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, R, 0, Math.PI*2);
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+
+    // Text
+    ctx.fillStyle = '#fff';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.font = 'bold 11px "Jost", sans-serif';
+    ctx.fillText(n.planet, n.x, n.y - 7);
+    ctx.font = '10px "Jost", sans-serif';
+    ctx.fillText(n.sign, n.x, n.y + 5);
+    ctx.font = '9px "Jost", sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.75)';
+    ctx.fillText(n.house, n.x, n.y + 17);
+  });
+}
+
+// Build interpretation text
+function buildInterpretation(placements, ruledBy) {
+  const rules = {};
+  Object.keys(ruledBy).forEach(p => {
+    const r = ruledBy[p];
+    if (!rules[r]) rules[r] = [];
+    rules[r].push(p);
+  });
+  const roots = Object.keys(placements).filter(p => !ruledBy[p]);
+
+  let html = '';
+
+  // Per-planet readings
+  Object.keys(placements).forEach(p => {
+    const {sign, house} = placements[p];
+    const pm = PLANET_MEANINGS[p] || 'shapes your creative world';
+    const sm = SIGN_MEANINGS[sign] || '';
+    const hm = HOUSE_MEANINGS[house] || '';
+    html += `<p><strong style="font-family:'Jost',sans-serif;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;font-style:normal">${p} in ${sign}${house?' · '+house:''}</strong><br>${pm}${sm?', '+sm:''}${hm?', '+hm:''}.</p>`;
+  });
+
+  // Overall flow
+  if (roots.length) {
+    html += `<p style="margin-top:1rem"><strong style="font-family:'Jost',sans-serif;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;font-style:normal">The core</strong><br>`;
+    roots.forEach(r => {
+      const {sign, house} = placements[r];
+      html += `${r} in ${sign}${house?' in the '+house+' house':''} is the anchor of this chart — all roads return here. `;
+    });
+    html += `</p>`;
+  }
+
+  return html;
+}
+
+function calculate() {
+  const placements = getPlacements();
+  if (!Object.keys(placements).length) {
+    alert('Please enter at least one placement.');
+    return;
+  }
+  document.getElementById('emptyState').style.display = 'none';
+  drawMap(placements);
+
+  // Build ruledBy for interpretation
+  const ruledBy = {};
+  Object.keys(placements).forEach(p => {
+    const sign = placements[p].sign;
+    const ruler = RULERS[sign];
+    if (ruler && placements[ruler] && ruler !== p) ruledBy[p] = ruler;
+  });
+
+  const html = buildInterpretation(placements, ruledBy);
+  document.getElementById('interpBody').innerHTML = html;
+  const interp = document.getElementById('interpretation');
+  interp.classList.add('visible');
+}
+
+function resetAll() {
+  PLANETS.forEach(p => {
+    document.getElementById('sign_'+p).value = '';
+    document.getElementById('house_'+p).value = '';
+  });
+  const canvas = document.getElementById('mapCanvas');
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  document.getElementById('emptyState').style.display = 'flex';
+  document.getElementById('interpretation').classList.remove('visible');
+}
+
+window.addEventListener('resize', () => {
+  const placements = getPlacements();
+  if (Object.keys(placements).length) drawMap(placements);
+});
+
+buildInputs();
+</script>
+</body>
+</html>
